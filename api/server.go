@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+
 	db "github.com/cristianrb/simplebank/db/sqlc"
 	"github.com/cristianrb/simplebank/token"
 	"github.com/cristianrb/simplebank/util"
@@ -42,6 +43,7 @@ func (server *Server) setupRouter() {
 	router := gin.Default()
 	router.POST("/users", server.createUser)
 	router.POST("/users/login", server.loginUser)
+	router.POST("/tokens/renew_access", server.renewAccessToken)
 
 	authRoutes := router.Group("/").Use(authMiddleware(server.tokenMaker))
 

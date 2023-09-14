@@ -18,21 +18,21 @@ func (logger *Logger) Print(level zerolog.Level, args ...any) {
 }
 
 func (logger *Logger) Debug(args ...interface{}) {
-	logger.Print(zerolog.DebugLevel, args)
+	logger.Print(zerolog.DebugLevel, args...)
 }
 
 func (logger *Logger) Info(args ...interface{}) {
-	logger.Print(zerolog.InfoLevel, args)
+	logger.Print(zerolog.InfoLevel, args...)
 }
 
 func (logger *Logger) Warn(args ...interface{}) {
-	logger.Print(zerolog.WarnLevel, args)
+	logger.Print(zerolog.WarnLevel, args...)
 }
 
 func (logger *Logger) Error(args ...interface{}) {
-	logger.Print(zerolog.ErrorLevel, args)
+	logger.Print(zerolog.ErrorLevel, args...)
 }
 
 func (logger *Logger) Fatal(args ...interface{}) {
-	logger.Print(zerolog.FatalLevel, args)
+	logger.Print(zerolog.FatalLevel, args...)
 }

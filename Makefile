@@ -35,7 +35,7 @@ sqlc:
 	docker run --rm -v /home/cristian/development/go/simple_bank:/src -w /src kjconroy/sqlc generate # For Windows WSL
 
 test:
-	go test -v -cover ./...
+	go test -v -cover -short ./...
 
 server:
 	go run cmd/main.go

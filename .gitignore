@@ -115,3 +115,5 @@ fabric.properties
 *.log
 
 # End of https://www.toptal.com/developers/gitignore/api/go,intellij+all
+
+mail_pass.txt

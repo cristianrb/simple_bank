@@ -2,13 +2,14 @@ package main
 
 import (
 	"context"
-	"database/sql"
+	"github.com/jackc/pgx/v5/pgxpool"
+	"net"
+	"net/http"
+
 	"github.com/cristianrb/simplebank/mail"
 	"github.com/cristianrb/simplebank/worker"
 	"github.com/hibiken/asynq"
 	"github.com/rs/zerolog/log"
-	"net"
-	"net/http"
 
 	"github.com/cristianrb/simplebank/api"
 	db "github.com/cristianrb/simplebank/db/sqlc"
@@ -24,7 +25,7 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/golang/mock/mockgen/model"
-	_ "github.com/lib/pq"
+	_ "github.com/jackc/pgx/v5"
 )
 
 func main() {
@@ -32,7 +33,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Msg("cannot load config:")
 	}
-	conn, err := sql.Open(config.DBDriver, config.DBSource)
+	connPool, err := pgxpool.New(context.Background(), config.DBSource)
 	if err != nil {
 		log.Fatal().Msg("cannot connect to db:")
 	}
@@ -40,7 +41,7 @@ func main() {
 	// run db migration
 	runDBMigration(config.MigrationURL, config.DBSource)
 
-	store := db.NewStore(conn)
+	store := db.NewStore(connPool)
 
 	redisOpt := asynq.RedisClientOpt{
 		Addr: config.RedisAddress,
